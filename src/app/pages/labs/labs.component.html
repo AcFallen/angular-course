@@ -1,0 +1,32 @@
+<div class="container">
+  <h1>{{ welcome }}</h1>
+
+  <ul>
+    <li *ngFor="let task of tasks">{{ task }}</li>
+  </ul>
+
+  <hr />
+
+  <button [disabled]="disabled">Click</button>
+
+  <hr />
+
+  <p>{{ person.name }}</p>
+  <p>{{ person.age }}</p>
+  <p>{{ person.city }}</p>
+
+  <hr />
+
+  <button (click)="changeName()">Change Name</button>
+  <button (dblclick)="changeName()">Doble Click</button>
+
+  <hr />
+
+  <p>(change)</p>
+
+  <input type="text" (change)="inputHandler($event)" />
+
+  <p>(KeyDown)</p>
+
+  <input type="text" (keydown)="keydownHandler($event)" />
+</div>

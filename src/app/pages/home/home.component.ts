@@ -78,4 +78,26 @@ export class HomeComponent {
       )
     );
   }
+
+  editTask(index: number) {
+    this.tasks.update((tasks) =>
+      tasks.map((task, i) =>
+        i === index
+          ? { ...task, editing: !task.editing }
+          : { ...task, editing: false }
+      )
+    );
+  }
+
+  keydownHandler(event: Event, index: number) {
+    const input = event.target as HTMLInputElement;
+    const value = input.value.trim();
+    if (value) {
+      this.tasks.update((tasks) =>
+        tasks.map((task, i) =>
+          i === index ? { ...task, title: value, editing: false } : task
+        )
+      );
+    }
+  }
 }

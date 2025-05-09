@@ -2,6 +2,32 @@
     min-width: 230px;
     max-width: 550px;
     margin: 0 auto;
+    padding: 20px;
   }
   
+  .box {
+    display: block;
+    width: 100px;
+    height: 100px;
+    background-color: red;
+  }
+
+  .message-error {
   
+   color: red;
+   opacity: 0;
+   transition: all linear 0.5s;
+   font-size: 12px;
+   
+  }
+
+  .message-error.show {
+    opacity: 1;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+   
+  }

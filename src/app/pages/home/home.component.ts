@@ -1,4 +1,11 @@
-import { Component, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  signal,
+  effect,
+  Injector,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Task } from '../../models/task.model';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -10,33 +17,17 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  tasks = signal<Task[]>([
-    {
-      id: Date.now(),
-      title: 'Instalar Angular CLI',
-      completed: false,
-    },
-    {
-      id: Date.now(),
-      title: 'Crear un nuevo proyecto',
-      completed: true,
-    },
-    {
-      id: Date.now(),
-      title: 'Crear un nuevo componente',
-      completed: false,
-    },
-    {
-      id: Date.now(),
-      title: 'Crear un nuevo servicio',
-      completed: true,
-    },
-    {
-      id: Date.now(),
-      title: 'Crear un nuevo pipe',
-      completed: true,
-    },
-  ]);
+  tasks = signal<Task[]>([]);
+
+  filter = signal<'all' | 'pending' | 'completed'>('all');
+
+  filteredTasks = computed(() => {
+    return this.tasks().filter((task) => {
+      if (this.filter() === 'all') return true;
+      if (this.filter() === 'pending') return !task.completed;
+      return task.completed;
+    });
+  });
 
   newTaskControl = new FormControl('', {
     nonNullable: true,
@@ -47,6 +38,25 @@ export class HomeComponent {
       Validators.nullValidator,
     ],
   });
+
+  inyector = inject(Injector);
+
+  ngOnInit() {
+    const tasks = localStorage.getItem('tasks');
+    if (tasks) {
+      this.tasks.set(JSON.parse(tasks));
+    }
+    this.trackTask();
+  }
+
+  trackTask() {
+    effect(
+      () => {
+        localStorage.setItem('tasks', JSON.stringify(this.tasks()));
+      },
+      { injector: this.inyector }
+    );
+  }
 
   changehandler() {
     if (this.newTaskControl.valid) {
@@ -99,5 +109,9 @@ export class HomeComponent {
         )
       );
     }
+  }
+
+  changeFilter(filter: 'all' | 'pending' | 'completed') {
+    this.filter.set(filter);
   }
 }

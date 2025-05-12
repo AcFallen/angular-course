@@ -35,7 +35,7 @@ export class LabsComponent {
     });
   }
 
-  name = signal('John');
+  name = signal('Juan');
 
   disabled = true;
 

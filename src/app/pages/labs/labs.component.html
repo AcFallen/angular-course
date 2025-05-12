@@ -7,6 +7,20 @@
 
   <hr />
 
+  @if(name() === 'John'){
+  <p>Hola John</p>
+  } @else {
+  <p>Hola {{ name() }}</p>
+  }
+
+  <h2>If else new sintaxsis</h2>
+
+  @if (name() === 'John'){
+  <p>Hola Jhon</p>
+  } @else {
+  <p>No soy Jhon</p>
+  }
+
   <button [disabled]="disabled">Click</button>
 
   <hr />
@@ -30,7 +44,7 @@
 
   <input type="text" (keydown)="keydownHandler($event)" />
 
-  <hr>
+  <hr />
   <p>Signal</p>
 
   <p>{{ name() }}</p>
@@ -43,28 +57,36 @@
     <li *ngFor="let task of tasks(); index as i">{{ i }} - {{ task }}</li>
   </ul>
 
-  <hr>
+  <hr />
 
   <!-- Equivalente a ReactHookForm -->
 
-  <input type="color" [formControl]="colorControl">
+  <input type="color" [formControl]="colorControl" />
   <p>Color: {{ colorControl.value }}</p>
 
   <svg>
-    <rect x="0" y="0" width="100" height="100" [attr.fill]="colorControl.value" />
+    <rect
+      x="0"
+      y="0"
+      width="100"
+      height="100"
+      [attr.fill]="colorControl.value"
+    />
   </svg>
 
+  <hr />
 
-  <hr>
-
-  <input type="number" [formControl]="widthControl">
+  <input type="number" [formControl]="widthControl" />
   <span [style.width]="widthControl.value + 'px'" class="box"></span>
 
-  <hr>
+  <hr />
 
   <div class="form-group">
-    <input type="text" [formControl]="nameControl">
-    <span class="message-error" [class.show]="nameControl.invalid && nameControl.touched">
+    <input type="text" [formControl]="nameControl" />
+    <span
+      class="message-error"
+      [class.show]="nameControl.invalid && nameControl.touched"
+    >
       Nombre invalido
     </span>
 
